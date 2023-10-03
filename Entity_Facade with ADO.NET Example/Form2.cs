@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using BLL;
+using Entity;
 
 namespace Entity_Facade_with_ADO.NET_Example
 {
@@ -15,6 +8,31 @@ namespace Entity_Facade_with_ADO.NET_Example
         public Form2()
         {
             InitializeComponent();
+
+            btnSirketGuncelle.Click += BtnSirketGuncelle_Click;
+        }
+
+        private void BtnSirketGuncelle_Click(object? sender, EventArgs e)
+        {
+            string mesaj = string.Empty;
+            EShipper shipper = new EShipper();
+            shipper.CompanyName = txtSirketAd.Text;
+            shipper.Phone = txtSirketTelefon.Text;
+            shipper.ShipperID = Convert.ToInt32(txtSirketID.Text);
+
+
+            bool sonuc = BLLShippers.BLL_UPDATE(shipper);
+
+            if (sonuc)
+            {
+                mesaj = "İşlem Başarılı!";
+            }
+            else
+            {
+                mesaj = "İşlem Başarısız!";
+            }
+
+            MessageBox.Show(mesaj, "İşlem!", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }
